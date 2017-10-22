@@ -1,61 +1,59 @@
 package com.geet.vsm.model;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Term {
-	public String termString;
-	public int termFrequency=0;
-	public int documentFrequency = 0;
-	public double inverseDocumentFrequency = 0.0; 
 	
-	public Term(String termString) {
-		this.termString = termString;
+	public String term;
+	public int tf = 0;
+	public int df = 0;
+	public double idf = 0.0; 
+	
+	public Term(String term) {
+		this.term = term;
 	}
-	public Term(String termString, int termFrequency) {
+	public Term(String term, int tf) {
 		super();
-		this.termString = termString;
-		this.termFrequency = termFrequency;
+		this.term = term;
+		this.tf = tf;
 	} 
-	public Term(String termString, int termFrequency,
-			int documentFrequency) {
+	public Term(String term, int tf,
+			int df) {
 		super();
-		this.termString = termString;
-		this.termFrequency = termFrequency;
-		this.documentFrequency = documentFrequency;
+		this.term = term;
+		this.tf = tf;
+		this.df = df;
 	}
 	public boolean isSame(Term term){
-		if (term.termString.equals(termString)) {
+		if (term.term.equals(term)) {
 			return true;
 		} 
 		return false;
 	}
-	public void setDocumentFrequencyAndInverseDocumentFrequency(List<Document>documents){
+	
+	public void setdfAndidf(List<Document>documents){
 		for (Document document : documents) {
-			for (Term term : document.getTerms()) {
-				if (isSame(term)) {
-					documentFrequency++;
-					break;
-				}
-			}
+			if (document.hashTerms.containsKey(term)) {
+				Term candidateTerm = document.hashTerms.get(term);
+				candidateTerm.df++;
+				document.hashTerms.put(term, candidateTerm);
+			} 
 		}
-		inverseDocumentFrequency = 1+Math.log10((double)documents.size()/(double)documentFrequency);
-		//System.out.println(inverseDocumentFrequency);
+		idf = 1+Math.log10((double)documents.size()/(double)df);
 	}
-	public void setTermFrequencyFromDocument(Document document){
-		for (Term term : document.getTerms()) {
-			if (isSame(term)) {
-				termFrequency = term.termFrequency;
-				return ;
-			}
-		}
-	}
+	
 	public double getTF_IDF(){
-		return  (double) termFrequency * inverseDocumentFrequency;
+		return  (double) tf * idf;
 	}
 	public double getTF(){
-		return  (double) termFrequency;
+		return  (double) tf;
 	}
 	@Override
 	public String toString() {
-		return "[ "+termString+","+termFrequency+","+inverseDocumentFrequency+"] ";
+		return "[ "+term+","+tf+","+idf+"] ";
+	}
+
+	public Term toClone() {
+		return new Term(term, tf, df);
 	}
 }
