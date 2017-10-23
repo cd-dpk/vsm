@@ -10,9 +10,8 @@ public class VSMApp {
 
 	public static void main(String[] args) {
 		List<Document> documents = new ArrayList<Document>();
-		documents.add(new Document("Ram and Rahim are good friends"));
+		documents.add(new Document("Ram and Rahim HELLO10World are good friends!"));
 		documents.add(new Document("Ram is a good boy"));
-		
 		VectorSpaceModel vsm = new VectorSpaceModel();
 		vsm.documentsInVSM(documents);
 		for (Document document : documents) {

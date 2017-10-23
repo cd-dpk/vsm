@@ -1,7 +1,6 @@
 package com.geet.vsm.model;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.StringTokenizer;
 public class Document  implements Comparable<Document>{
 	
 	protected String article="";
@@ -10,7 +9,7 @@ public class Document  implements Comparable<Document>{
 	public double dotProduct = 0.0;
 	public Document(String article) {
 		this.article = article;
-		setTerms(" ", true, true);
+		setTerms("\\s|\\d", true, true);
 	}
 	public String getArticle() {
 		return article;
@@ -20,9 +19,9 @@ public class Document  implements Comparable<Document>{
 	// return the terms in a document with term-frequency included
 	private void setTerms(String delimiter, boolean isWithStopwordsRemoval, boolean isWithStemming) {
 		hashTerms = new HashMap<String,Double>();
-		StringTokenizer stringTokenizer = new StringTokenizer(getArticle(), delimiter, false);
-		while (stringTokenizer.hasMoreTokens()) {
-			String token = stringTokenizer.nextToken().toLowerCase();
+		String [] tokens = article.split(delimiter);
+		for (int i=0;i<tokens.length;i++) {
+			String token = tokens[i].toLowerCase();
 			if (isWithStemming) {
 				Stemmer stemmer = new Stemmer(token);
 				stemmer.stem();

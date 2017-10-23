@@ -21,7 +21,7 @@ public class VectorSpaceModel {
 		}
 		for (String key : terms.keySet()) {
 			// IDF of a term "key"
-			terms.put(key, Math.log10(1+(terms.get(key)/documents.size())));
+			terms.put(key, Math.log10(1+(terms.get(key)/documents.size()))/Math.log10(2.0));
 			for (Document document : documents) {
 				if (document.hashTerms.containsKey(key)) {
 					// calculate the TF*IDF
