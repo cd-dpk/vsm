@@ -1,4 +1,4 @@
-package com.geet.vsm.model;
+/*package com.geet.vsm.model;
 
 import java.util.HashMap;
 import java.util.List;
@@ -32,3 +32,4 @@ public class VectorSpaceModel {
 		return documents;
 	} 
 }
+*/
